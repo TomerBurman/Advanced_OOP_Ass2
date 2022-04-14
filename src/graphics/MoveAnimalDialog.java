@@ -1,4 +1,6 @@
 package graphics;
 
-public class MoveAnimalDialog {
+import javax.swing.*;
+
+public class MoveAnimalDialog extends JDialog {
 }

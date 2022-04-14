@@ -6,8 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ZooPanel extends JPanel implements Runnable {
-    private class ButtonPanel extends JPanel implements ActionListener {
-        private JButton add_Animal = new JButton("Add Animal");
+    private class ButtonPanel extends JPanel{
+        private JButton add_Animal = new JButton("Add Animal"); //getcontent
         private JButton move_Animal = new JButton("Move Animal");
         private JButton clear = new JButton("Clear");
         private JButton food = new JButton("Food");
@@ -21,11 +21,16 @@ public class ZooPanel extends JPanel implements Runnable {
 
 
         }
+        boolean animalButton(){
+            this.add_Animal.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
+                }
+            });
+            return true;
         }
+
     }
 
 
