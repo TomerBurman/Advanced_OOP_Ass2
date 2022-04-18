@@ -13,7 +13,7 @@ import privateutil.Roaring_animals;
 import utilities.MessageUtility;
 
 public class Lion extends Roaring_animals {
-    private final double default_weight = 408.2;
+    private final double weightFactor = 0.8;
     private int scarCount ;// how many scar's lion has
 
 
@@ -22,11 +22,12 @@ public class Lion extends Roaring_animals {
      * @param name animal name
      * @param location animal starting location
      */
-    public Lion(String name,Point location){
-        super(name,location);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getName());
-        super.setWeight(default_weight);
+    public Lion(String name,Point location,String col,int size){
+        super(name,location,col,size);
+        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
+        super.setWeight(getSize() * weightFactor);
         this.setDiet(new Carnivore()); // meat eater
+        this.loadImages("lion");
 
     }
 
@@ -36,7 +37,7 @@ public class Lion extends Roaring_animals {
      */
     public Lion(String name){
 
-        this(name,new Point(20,0));
+        this(name,new Point(20,0),default_color,default_size);
     }
 
     /**
@@ -48,10 +49,10 @@ public class Lion extends Roaring_animals {
         int rand_int = rand.nextInt(2); //generating either 0/1
         if(rand_int == 1) {
             scarCount += 1;
-            MessageUtility.logSetter(this.getName(), "addScarCount", 1, true);
+            MessageUtility.logSetter(this.getAnimalName(), "addScarCount", 1, true);
             return true;
         }
-        MessageUtility.logSetter(this.getName(), "addScarCount", 0, false);
+        MessageUtility.logSetter(this.getAnimalName(), "addScarCount", 0, false);
         return false;
     }
 
@@ -60,7 +61,7 @@ public class Lion extends Roaring_animals {
      * @return how many scar's the lion has.
      */
     public int getScarsCount(){
-        MessageUtility.logGetter(this.getName(),"getScarsCount",scarCount);
+        MessageUtility.logGetter(this.getAnimalName(),"getScarsCount",scarCount);
         return scarCount;}
 
     /**
@@ -86,7 +87,7 @@ public class Lion extends Roaring_animals {
 
 
     public void roar(){
-        MessageUtility.logSound(this.getName(),"Roars, then stretches and shakes it mane");
+        MessageUtility.logSound(this.getAnimalName(),"Roars, then stretches and shakes it mane");
     }
 
     /**

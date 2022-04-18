@@ -11,14 +11,14 @@ import diet.Herbivore;
 import mobility.Point;
 import privateutil.Chewing_animals;
 import utilities.MessageUtility;
-import static utilities.MessageUtility.logConstractor;
+
 import static utilities.MessageUtility.logSetter;
 
 
 public class Turtle extends Chewing_animals {
     private int Age;
     private final static int defaultAge = 1;
-    private final static int defaultWeight = 1;
+    private final static double weightFactor = 0.5;
     private final static int maxAge = 500;
 
     /**
@@ -27,13 +27,14 @@ public class Turtle extends Chewing_animals {
      * @param location - turtle location
      * @param Age - turtle age
      */
-    public Turtle(String name, Point location, int Age){
-        super(name,location);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getName());
-        this.setWeight(defaultWeight);
+    public Turtle(String name, Point location,String col,int size, int Age){
+        super(name,location,col,size);
+        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
+        this.setWeight(getSize()* weightFactor);
         if(!this.setAge(Age))
             setAge(defaultAge);
         this.setDiet(new Herbivore());
+        this.loadImages("turtle");
 
 
     }
@@ -44,7 +45,7 @@ public class Turtle extends Chewing_animals {
      * @param location
      */
     public Turtle(String name, Point location){
-        this(name,location,defaultAge);
+        this(name,location,default_color,default_size,defaultAge);
     }
 
     /**
@@ -52,7 +53,7 @@ public class Turtle extends Chewing_animals {
      * @param name
      */
     public Turtle(String name){
-        this(name,new Point(80, 0 ),defaultAge);
+        this(name,new Point(80, 0 ),default_color,default_size,defaultAge);
 
     }
 
@@ -64,10 +65,10 @@ public class Turtle extends Chewing_animals {
     private boolean setAge(int Age) {
         if(Age > 0 && Age <= maxAge){
             this.Age = Age;
-            logSetter(this.getName(),"SetAge", Age,true);
+            logSetter(this.getAnimalName(),"SetAge", Age,true);
             return true;
         }
-        logSetter(this.getName(),"SetAge", Age,false);
+        logSetter(this.getAnimalName(),"SetAge", Age,false);
         return false;
     }
 
@@ -76,7 +77,7 @@ public class Turtle extends Chewing_animals {
      * @return animal age
      */
     public int getAge() {
-        MessageUtility.logGetter(this.getName(),"getAge",Age);
+        MessageUtility.logGetter(this.getAnimalName(),"getAge",Age);
         return Age;
     }
 
@@ -91,7 +92,7 @@ public class Turtle extends Chewing_animals {
      */
     @Override
     public void chew() {
-        MessageUtility.logSound(this.getName(),"Retracts its head in then eats quietly");
+        MessageUtility.logSound(this.getAnimalName(),"Retracts its head in then eats quietly");
     }
 
 

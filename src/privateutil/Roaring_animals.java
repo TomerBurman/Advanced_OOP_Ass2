@@ -13,9 +13,10 @@ public abstract class Roaring_animals extends Animal {
      * ctor, calls Animal ctor.
      * @param name
      * @param location
+     * @param size
      */
-    public Roaring_animals(String name, Point location){
-        super(name,location);
+    public Roaring_animals(String name, Point location,String col,int size){
+        super(name,location,col,size);
     }
 
 

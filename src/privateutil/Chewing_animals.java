@@ -13,8 +13,8 @@ public abstract class Chewing_animals extends Animal{
      * @param name - name of the Animal
      * @param location - location of the animal
      */
-    public Chewing_animals(String name, Point location){
-        super(name,location);
+    public Chewing_animals(String name, Point location,String col,int size){
+        super(name,location,col,size);
     }
 
 

@@ -17,19 +17,21 @@ public class Elephant extends Chewing_animals {
     private final static double min_trungLength = 0.5;
     private final static double maximum_trunkLength = 3;
     private final static double trunkDefaultLength = 1;
+    private final double weightFactor = 10;
 
     /**
      * Elephant Ctor
      * @param name - elephant name.
      * @param location - elephant location.
      */
-    public Elephant(String name, Point location, double trunkLength) {
-        super(name, location);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getName());
-        this.setWeight(500);
+    public Elephant(String name, Point location,String col,int size, double trunkLength) {
+        super(name, location,col,size);
+        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
+        this.setWeight(getSize() * weightFactor);
         if (!setTrunkLength(trunkLength))
             setTrunkLength(trunkDefaultLength);
         this.setDiet(new Herbivore());
+        this.loadImages("elephant");
 
     }
 
@@ -39,7 +41,7 @@ public class Elephant extends Chewing_animals {
      * @param location - elephant location.
      */
     public Elephant(String name, Point location){
-        this(name,location,trunkDefaultLength);
+        this(name,location,default_color,default_size,trunkDefaultLength);
     }
 
 
@@ -48,7 +50,7 @@ public class Elephant extends Chewing_animals {
      * @param name - elephant name.
      */
     public Elephant(String name) {
-        this(name, new Point(50,90),trunkDefaultLength);
+        this(name, new Point(50,90),default_color,default_size,trunkDefaultLength);
 
     }
 
@@ -59,11 +61,11 @@ public class Elephant extends Chewing_animals {
      */
     public boolean setTrunkLength(double length){
         if(length >= min_trungLength && length <= maximum_trunkLength){
-            logSetter(this.getName(),"setTrunkLength",length, true);
+            logSetter(this.getAnimalName(),"setTrunkLength",length, true);
             this.trunkLength = length;
             return true;
         }
-        logSetter(this.getName(),"setTrunkLength",length, false);
+        logSetter(this.getAnimalName(),"setTrunkLength",length, false);
         return false;
     }
 
@@ -79,7 +81,7 @@ public class Elephant extends Chewing_animals {
      */
     @Override
     public void chew() {
-       MessageUtility.logSound(this.getName(),"Trumpets with joy while flapping its ears, then chews");
+       MessageUtility.logSound(this.getAnimalName(),"Trumpets with joy while flapping its ears, then chews");
     }
 
     /**
@@ -87,7 +89,7 @@ public class Elephant extends Chewing_animals {
      * @return animal trunk length
      */
     public double getTrunkLength() {
-        MessageUtility.logGetter(this.getName(),"getTrunkLength",trunkLength);
+        MessageUtility.logGetter(this.getAnimalName(),"getTrunkLength",trunkLength);
         return trunkLength;
     }
 

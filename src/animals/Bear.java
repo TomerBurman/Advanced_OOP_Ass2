@@ -10,32 +10,22 @@ import diet.Omnivore;
 import mobility.Point;
 import privateutil.Roaring_animals;
 import utilities.MessageUtility;
-import static utilities.MessageUtility.logGetter;
-import static utilities.MessageUtility.logSetter;
-
 
 
 public class Bear extends Roaring_animals {
-    private final static double defaultWeight = 308.2;
-    private final static String defaultFurColor = "GRAY";
-    private String furColor;
-    private final String[] colors_array = {"BLACK","WHITE","GRAY"}; // color choices.
+    private final double weightFactor = 1.5;
 
     /**
      * Bear Ctor
      * @param name - bear name
      * @param location - bear location
-     * @param furColor - bear color
      */
-    public Bear(String name,Point location, String furColor){
-        super(name,location);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getName());
-        this.setWeight(defaultWeight);
+    public Bear(String name,Point location,String col,int size){
+        super(name,location,col,size);
+        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
+        this.setWeight(getSize() * weightFactor);
         this.setDiet(new Omnivore()); // meat eater
-        if(!setFurColor(furColor))
-            setFurColor(defaultFurColor);
-
-
+        this.loadImages("bear");
     }
 
     /**
@@ -44,7 +34,7 @@ public class Bear extends Roaring_animals {
      * @param location - bear location
      */
     public Bear(String name, Point location) {
-        this(name, location,defaultFurColor);
+        this(name, location,default_color,default_size);
     }
 
     /**
@@ -53,33 +43,9 @@ public class Bear extends Roaring_animals {
      * @param name - bear name
      */
     public Bear(String name) {
-        this(name, new Point(100,5),defaultFurColor);
+        this(name, new Point(100,5),default_color,default_size);
     }
 
-    /**
-     * setFurColor method.
-     * @param furColor - bear fur color
-     * @return true if the fur color is in the fur color list else false.
-     */
-    public boolean setFurColor(String furColor){
-        for (String s : colors_array)
-            if (s.equals(furColor)) {
-                this.furColor = furColor;
-                logSetter(this.getName(), "setFurColor", furColor, true);
-                return true;
-            }
-        logSetter(this.getName(), "setFurColor", furColor, false);
-        return false;
-    }
-
-    /**
-     * getFutColor
-     * @return String - represent the bear fur color
-     */
-    public String getFurColor(){
-        logGetter(this.getName(),"getFurColor",this.furColor);
-        return this.furColor;
-    }
 
     @Override
     public String toString(){
@@ -93,7 +59,7 @@ public class Bear extends Roaring_animals {
      */
     @Override
     public void roar() {
-        MessageUtility.logSound(this.getName(),"Stands on its hind legs, roars and scratches its belly");
+        MessageUtility.logSound(this.getAnimalName(),"Stands on its hind legs, roars and scratches its belly");
     }
 
 }
