@@ -95,6 +95,12 @@ public class Turtle extends Chewing_animals {
         MessageUtility.logSound(this.getAnimalName(),"Retracts its head in then eats quietly");
     }
 
-
+    /**
+     * getDefaultLocation - returns default location
+     * @return point
+     */
+    public Point getDefaultLocation(){
+        return new Point(80,0);
+    }
 
 }

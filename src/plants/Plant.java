@@ -135,4 +135,7 @@ public abstract class Plant implements IEdible, ILocatable, IDrawable {
 		return "[" + this.getClass().getSimpleName() + "] ";
 	}
 
+
+
+
 }

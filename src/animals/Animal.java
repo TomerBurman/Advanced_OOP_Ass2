@@ -112,6 +112,7 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
             this.weight = weight;
             return true;
         }
+        System.out.println("I got here ");
         MessageUtility.logSetter(this.getAnimalName(), "setWeight", weight,false);
         return false;
     }
@@ -305,9 +306,9 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
     }
     public void drawObject(Graphics g){
         if(x_dir == 1 )
-            g.drawImage(img1,this.getLocation().getX()-size/2,this.getLocation().getY()-size/10,size/2,size,pan);
+            g.drawImage(img1,Math.abs(this.getLocation().getX()-size/2),Math.abs(this.getLocation().getY()-size/10),size/2,size,pan);
         else
-            g.drawImage(img2,this.getLocation().getX(),this.getLocation().getY()-size/10,size/2,size,pan);
+            g.drawImage(img2,Math.abs(this.getLocation().getX()),Math.abs(this.getLocation().getY()-size/10),size/2,size,pan);
 
     }
 }

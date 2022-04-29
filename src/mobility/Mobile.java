@@ -21,6 +21,7 @@ public abstract class Mobile implements ILocatable{
      */
 
     public Mobile(Point p){
+
         this.setLocation(p);
         this.totalDistance = 0;
     }
@@ -48,8 +49,12 @@ public abstract class Mobile implements ILocatable{
      */
     @Override
     public boolean setLocation(Point location){
-        this.location = location;
-        return true;
+        if(Point.checkBoundaries(location)) {
+            this.location = location;
+            return true;
+        }
+        this.location = this.getDefaultLocation();
+        return false;
     }
 
     /**
@@ -107,5 +112,9 @@ public abstract class Mobile implements ILocatable{
 
     }
 
+    /**
+     *
+     */
+    public abstract Point getDefaultLocation();
 
 }

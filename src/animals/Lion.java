@@ -36,7 +36,6 @@ public class Lion extends Roaring_animals {
      * @param name animal name
      */
     public Lion(String name){
-
         this(name,new Point(20,0),default_color,default_size);
     }
 
@@ -108,5 +107,11 @@ public class Lion extends Roaring_animals {
         return EFoodType.NOTFOOD;
     }
 
-
+    /**
+     * getDefaultLocation - returns default location
+     * @return point
+     */
+    public Point getDefaultLocation(){
+        return new Point(20,0);
+    }
 }

@@ -62,4 +62,12 @@ public class Bear extends Roaring_animals {
         MessageUtility.logSound(this.getAnimalName(),"Stands on its hind legs, roars and scratches its belly");
     }
 
+    /**
+     * getDefaultLocation - returns default location
+     * @return point
+     */
+    public Point getDefaultLocation(){
+        return new Point(100,5);
+    }
+
 }

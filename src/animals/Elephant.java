@@ -92,6 +92,12 @@ public class Elephant extends Chewing_animals {
         MessageUtility.logGetter(this.getAnimalName(),"getTrunkLength",trunkLength);
         return trunkLength;
     }
-
+    /**
+     * getDefaultLocation - returns default location
+     * @return point
+     */
+    public Point getDefaultLocation(){
+        return new Point(50,90);
+    }
 
 }
