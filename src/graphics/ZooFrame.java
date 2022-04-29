@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 public class ZooFrame extends JFrame {
     private final ZooMenu menu = new ZooMenu();
+    private static ZooPanel panel;
 
 
     private static class ZooMenu extends JMenuBar{
@@ -25,6 +26,8 @@ public class ZooFrame extends JFrame {
             JMenuItem image = new JMenuItem("Image");
             JMenuItem green = new JMenuItem("Green");
             JMenuItem none = new JMenuItem("None");
+            none.addActionListener(e -> panel.setBackground(Color.WHITE));
+            green.addActionListener(e -> panel.setBackground(Color.GREEN));
             backGround.add(image);
             backGround.add(green);
             backGround.add(none);
