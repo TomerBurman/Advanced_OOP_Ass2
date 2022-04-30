@@ -26,14 +26,14 @@ public class ZooFrame extends JFrame {
             JMenuItem image = new JMenuItem("Image");
             JMenuItem green = new JMenuItem("Green");
             JMenuItem none = new JMenuItem("None");
-            none.addActionListener(e -> panel.setBackground(Color.WHITE));
-            green.addActionListener(e -> panel.setBackground(Color.GREEN));
+            none.addActionListener(e -> ZooPanel.setBack(Color.WHITE));
+            green.addActionListener(e -> ZooPanel.setBack(Color.GREEN));
             backGround.add(image);
             backGround.add(green);
             backGround.add(none);
             JMenu help = new JMenu("Help");
             JMenuItem help_item = new JMenuItem("Help");
-            help_item.addActionListener(e -> JOptionPane.showMessageDialog(new JFrame(),"Homework-2 GUI"));
+            help_item.addActionListener(e -> JOptionPane.showMessageDialog(new JFrame(),"Homework-2 GUI","Help",JOptionPane.INFORMATION_MESSAGE));
             help.add(help_item);
             this.add(file);
             this.add(backGround);
@@ -51,10 +51,14 @@ public class ZooFrame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+
+    public static ZooPanel getPanel(){
+        return panel;
+    }
+
     public static void main(String[] args){
         ZooFrame zoo = new ZooFrame();
         zoo.setJMenuBar(new ZooMenu());
-        zoo.getContentPane().setBackground(Color.green);
     }
 
 }

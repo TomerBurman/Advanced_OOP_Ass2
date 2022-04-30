@@ -66,8 +66,9 @@ public class AddAnimalDialog extends JDialog {
                     case "Elephant" -> animalToAdd = new Elephant(name, location, col, size, changing_field);
 
                 }
-                if(animalToAdd != null)
+                if(animalToAdd != null) {
                     ZooPanel.addAnimal(animalToAdd);
+                }
             }
         });
         field = new Animal_fields();
@@ -76,9 +77,7 @@ public class AddAnimalDialog extends JDialog {
         this.add(field, BorderLayout.EAST); // adding field panel
         this.add(create_animal,BorderLayout.SOUTH);// adding Create button.
         field.setVisible(false);
-        this.setVisible(true);
         this.setSize(400, 400);
-
         this.addWindowListener(new WindowAdapter() {
             @Override
             /**
@@ -92,6 +91,8 @@ public class AddAnimalDialog extends JDialog {
             }
         });
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setModal(true);// focuses on Dialog.
+        this.setVisible(true);
 
 
     }

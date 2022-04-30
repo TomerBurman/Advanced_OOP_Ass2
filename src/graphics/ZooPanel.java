@@ -12,10 +12,11 @@ import java.util.ArrayList;
 public class ZooPanel extends JPanel implements Runnable {
     private static int num_of_Animals = 0; // number of animals in zoo
     private static final int max_animals = 10;
-    private static JDialog add_dialog;
+    private static JDialog dialog;
     private static ArrayList<Animal> animal_list = new ArrayList<>();
     private static drawPanel draw_panel;
     private ButtonPanel button_panel;
+
 
     public ZooPanel(){
         draw_panel = new drawPanel();
@@ -25,9 +26,30 @@ public class ZooPanel extends JPanel implements Runnable {
         this.add(draw_panel,BorderLayout.CENTER); // painting panel
 
     }
+    public static void manageZoo(){
+       if(isChanged()) {
+           draw_panel.repaint();
+       }
+    }
+
+    public static boolean isChanged(){
+        for(Animal animal : animal_list)
+            if(animal.getChanges()) {
+                animal.setChanges(false);
+                return true;
+            }
+        return false;
+    }
 
 
+    public static drawPanel getDraw_panel(){
+        return draw_panel;
+    }
 
+    public static void setBack(Color c){
+        draw_panel.setBackground(c);
+    }
+   public static ArrayList<Animal> getAnimalList(){return animal_list;}
 
     private class ButtonPanel extends JPanel{
         private JButton add_Animal = new JButton("Add Animal"); //getcontent
@@ -57,12 +79,23 @@ public class ZooPanel extends JPanel implements Runnable {
                 @Override
                 public void actionPerformed(ActionEvent e){
                         if(num_of_Animals < max_animals)
-                            add_dialog = AddAnimalDialog.makeInstance();
+                            dialog = AddAnimalDialog.makeInstance();
                         else {
                             JOptionPane.showMessageDialog(button_panel,"Can not add more then 10 animals. ","Error message",JOptionPane.WARNING_MESSAGE
                             );
 
                         }
+                }
+            });
+            this.move_Animal.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(num_of_Animals > 0 ){
+                        dialog = new MoveAnimalDialog();
+                    }
+                    else
+                        JOptionPane.showMessageDialog(dialog,"No animals available","Error message",JOptionPane.WARNING_MESSAGE);
+
                 }
             });
             this.exit.addActionListener(new ActionListener() {
@@ -75,11 +108,13 @@ public class ZooPanel extends JPanel implements Runnable {
             return true;
         }
 
+
     }
     private static class drawPanel extends JPanel {
 
         public drawPanel(){
             this.setPreferredSize(new Dimension(800,600));
+
         }
         /**
          * paintComponent
@@ -87,6 +122,7 @@ public class ZooPanel extends JPanel implements Runnable {
          */
         @Override
         protected void paintComponent(Graphics g){
+            super.paintComponent(g);
             for(Animal animal : animal_list)
                 animal.drawObject(g);
         }
@@ -94,11 +130,12 @@ public class ZooPanel extends JPanel implements Runnable {
     }
 
 
-
     @Override
     public void run() {
         //TODO
     }
+
+
 
     public static void addAnimal(Animal animal){
         if(num_of_Animals < max_animals) {
@@ -107,15 +144,10 @@ public class ZooPanel extends JPanel implements Runnable {
             num_of_Animals++;
         }
         else{
-            JOptionPane.showMessageDialog(add_dialog,"You can not make more then 10 animals at once. ","Error message",JOptionPane.WARNING_MESSAGE
+            JOptionPane.showMessageDialog(dialog,"You can not make more then 10 animals at once. ","Error message",JOptionPane.WARNING_MESSAGE
             );
         }
     }
 
-
-    /**
-     * getDrawPanel - returns drawPanel
-     * @return drawPanel
-     */
 
 }

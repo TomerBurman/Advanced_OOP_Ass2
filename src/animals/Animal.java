@@ -11,6 +11,7 @@ import food.EFoodType;
 import food.IEdible;
 import graphics.IAnimalBehavior;
 import graphics.IDrawable;
+import graphics.ZooFrame;
 import graphics.ZooPanel;
 import mobility.*;
 import mobility.Point;
@@ -82,7 +83,7 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
         this.setName(name);
         this.setSize(size);
         this.setColor(col);
-
+        pan = ZooFrame.getPanel();
     }
 
 
@@ -306,7 +307,7 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
     }
     public void drawObject(Graphics g){
         if(x_dir == 1 )
-            g.drawImage(img1,Math.abs(this.getLocation().getX()-size/2),Math.abs(this.getLocation().getY()-size/10),size/2,size,pan);
+            g.drawImage(img1,Math.abs(this.getLocation().getX()-size/2),Math.abs(this.getLocation().getY()-size/10),size/2,size, pan);
         else
             g.drawImage(img2,Math.abs(this.getLocation().getX()),Math.abs(this.getLocation().getY()-size/10),size/2,size,pan);
 
