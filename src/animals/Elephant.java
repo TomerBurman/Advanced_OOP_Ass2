@@ -69,6 +69,10 @@ public class Elephant extends Chewing_animals {
         return false;
     }
 
+    /**
+     * uses animal toString.
+     * @return
+     */
     @Override
     public String toString(){
         return super.toString();

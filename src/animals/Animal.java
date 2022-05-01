@@ -312,20 +312,40 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
             System.out.println("Cannot load image");
         }
     }
+
+    /**
+     * drawObject - graphics drawImage to draw animal to draw_panel in ZooPanel.
+     * @param g - graphics.
+     */
     public void drawObject(Graphics g){
+        Graphics2D gr = (Graphics2D)g;
         if(x_dir == 1 )
-            g.drawImage(img1,Math.abs(this.getLocation().getX()-size/2),Math.abs(this.getLocation().getY()-size/10),size/2,size, pan);
+            gr.drawImage(img1, Math.abs(this.getLocation().getX() - size / 2), Math.abs(this.getLocation().getY() - size / 10), size / 2, size, pan);
         else
-            g.drawImage(img2,Math.abs(this.getLocation().getX()),Math.abs(this.getLocation().getY()-size/10),size/2,size,pan);
+            gr.drawImage(img2,Math.abs(this.getLocation().getX()),Math.abs(this.getLocation().getY()-size/10),size/2,size,pan);
 
     }
 
+    /**
+     * getHorSpeed - returns horizontal speed of the animal.
+     * @return int
+     */
     public Integer getHorSpeed() {
         return this.horSpeed;
     }
+
+    /**
+     * getVerSpeed - returns vertical speed of the animal
+     * @return int
+     */
     public Integer getVerSpeed() {
         return this.verSpeed;
     }
+
+    /**
+     * getEAT_DISTANCE - returns distance required to eat any type of appropriate food
+     * @return int.
+     */
     public int getEAT_DISTANCE(){
         return this.EAT_DISTANCE;
     }
