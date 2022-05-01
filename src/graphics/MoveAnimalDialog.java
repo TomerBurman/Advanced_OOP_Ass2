@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.Objects;
 
 
 /**
@@ -82,7 +83,7 @@ public class MoveAnimalDialog extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Animal animal = (Animal)animalsList.getSelectedItem();
-                    int x = -1, y = -1;
+                    int x,y;
                     try{
                         x = Integer.parseInt(x_Location.getText());
                         y = Integer.parseInt(y_Location.getText());
@@ -91,10 +92,12 @@ public class MoveAnimalDialog extends JDialog {
                             JOptionPane.showMessageDialog(new JPanel(),"Point is out of bound.","Error message",JOptionPane.ERROR_MESSAGE);
                             return;
                         }
-                        animal.move(p);
-                        animal.setChanges(true);
+                        if (animal != null) {
+                            animal.move(p);
+                            animal.setChanges(true);
+                        }
                         newLocation.setText("New location  ");
-                        point.setText(animal.getLocation().toString());
+                        point.setText(Objects.requireNonNull(animal).getLocation().toString());
                         ZooPanel.manageZoo();
                     }
                     catch(NumberFormatException exc){

@@ -8,7 +8,6 @@ package animals;
 import diet.Herbivore;
 import mobility.*;
 import privateutil.Chewing_animals;
-import utilities.MessageUtility;
 
 /**
  * Giraffe - extends Chewing animals
@@ -29,7 +28,6 @@ public class Giraffe extends Chewing_animals {
      */
     public Giraffe(String name, Point location, String color, int size, double length) {
         super(name, location, color, size);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(), this.getAnimalName());
         this.setWeight(getSize() * weightFactor);
         if (!this.setNeckLength(length))
             this.setNeckLength(defaultLength);
@@ -66,11 +64,9 @@ public class Giraffe extends Chewing_animals {
      */
     public boolean setNeckLength(double length) {
         if (length >= neck_Length_min && length <= neck_Length_max) {
-            MessageUtility.logSetter(this.getAnimalName(), "setNeckLength", length, true);
             this.neckLength = length;
             return true;
         }
-        MessageUtility.logSetter(this.getAnimalName(), "setNeckLength", length, false);
         return false;
     }
 
@@ -80,7 +76,6 @@ public class Giraffe extends Chewing_animals {
      * @return neckLength of giraffe.
      */
     public double getNeckLength() {
-        MessageUtility.logGetter(this.getAnimalName(), "getNeckLength", this.neckLength);
         return neckLength;
     }
 
@@ -99,7 +94,7 @@ public class Giraffe extends Chewing_animals {
      * uses messageUtility.
      */
     public void chew() {
-        MessageUtility.logSound(this.getAnimalName(), "Bleats and Stomps its legs, then chews");
+        //TODO mat need to be deleted
     }
 
 

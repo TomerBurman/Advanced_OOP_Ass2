@@ -8,8 +8,8 @@ package animals;
 import diet.Herbivore;
 import mobility.Point;
 import privateutil.Chewing_animals;
-import utilities.MessageUtility;
-import static utilities.MessageUtility.logSetter;
+
+
 
 
 public class Elephant extends Chewing_animals {
@@ -26,7 +26,6 @@ public class Elephant extends Chewing_animals {
      */
     public Elephant(String name, Point location,String col,int size, double trunkLength) {
         super(name, location,col,size);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
         this.setWeight(getSize() * weightFactor);
         if (!setTrunkLength(trunkLength))
             setTrunkLength(trunkDefaultLength);
@@ -61,11 +60,9 @@ public class Elephant extends Chewing_animals {
      */
     public boolean setTrunkLength(double length){
         if(length >= min_trungLength && length <= maximum_trunkLength){
-            logSetter(this.getAnimalName(),"setTrunkLength",length, true);
             this.trunkLength = length;
             return true;
         }
-        logSetter(this.getAnimalName(),"setTrunkLength",length, false);
         return false;
     }
 
@@ -85,7 +82,6 @@ public class Elephant extends Chewing_animals {
      */
     @Override
     public void chew() {
-       MessageUtility.logSound(this.getAnimalName(),"Trumpets with joy while flapping its ears, then chews");
     }
 
     /**
@@ -93,7 +89,6 @@ public class Elephant extends Chewing_animals {
      * @return animal trunk length
      */
     public double getTrunkLength() {
-        MessageUtility.logGetter(this.getAnimalName(),"getTrunkLength",trunkLength);
         return trunkLength;
     }
     /**

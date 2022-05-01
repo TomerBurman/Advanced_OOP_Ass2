@@ -9,7 +9,6 @@ package animals;
 import diet.Omnivore;
 import mobility.Point;
 import privateutil.Roaring_animals;
-import utilities.MessageUtility;
 
 
 public class Bear extends Roaring_animals {
@@ -22,10 +21,14 @@ public class Bear extends Roaring_animals {
      */
     public Bear(String name,Point location,String col,int size){
         super(name,location,col,size);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
         this.setWeight(getSize() * weightFactor);
         this.setDiet(new Omnivore()); // meat eater
         this.loadImages("bea_" + color_choice.get(col) + "_");
+    }
+
+    @Override
+    public void roar() {
+        //TODO may need to delete
     }
 
     /**
@@ -52,15 +55,6 @@ public class Bear extends Roaring_animals {
         return super.toString() ;
     }
 
-    /**
-     * Roar methode
-     * Using after the animal eats.
-     * uses messageUtility.
-     */
-    @Override
-    public void roar() {
-        MessageUtility.logSound(this.getAnimalName(),"Stands on its hind legs, roars and scratches its belly");
-    }
 
     /**
      * getDefaultLocation - returns default location

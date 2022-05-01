@@ -10,7 +10,6 @@ import food.*;
 import mobility.Point;
 import java.util.Random;
 import privateutil.Roaring_animals;
-import utilities.MessageUtility;
 
 public class Lion extends Roaring_animals {
     private final double weightFactor = 0.8;
@@ -24,7 +23,6 @@ public class Lion extends Roaring_animals {
      */
     public Lion(String name,Point location,String col,int size){
         super(name,location,col,size);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
         super.setWeight(getSize() * weightFactor);
         this.setDiet(new Carnivore()); // meat eater
         this.loadImages("lio_" + color_choice.get(col) + "_");
@@ -48,10 +46,8 @@ public class Lion extends Roaring_animals {
         int rand_int = rand.nextInt(2); //generating either 0/1
         if(rand_int == 1) {
             scarCount += 1;
-            MessageUtility.logSetter(this.getAnimalName(), "addScarCount", 1, true);
             return true;
         }
-        MessageUtility.logSetter(this.getAnimalName(), "addScarCount", 0, false);
         return false;
     }
 
@@ -60,7 +56,6 @@ public class Lion extends Roaring_animals {
      * @return how many scar's the lion has.
      */
     public int getScarsCount(){
-        MessageUtility.logGetter(this.getAnimalName(),"getScarsCount",scarCount);
         return scarCount;}
 
     /**
@@ -86,7 +81,8 @@ public class Lion extends Roaring_animals {
 
 
     public void roar(){
-        MessageUtility.logSound(this.getAnimalName(),"Roars, then stretches and shakes it mane");
+        //TODO mat need to be deleted
+
     }
 
     /**
@@ -103,7 +99,6 @@ public class Lion extends Roaring_animals {
      * @return EFoodType
      */
     public EFoodType getFoodType(){
-        MessageUtility.logGetter(this.getClass().getSimpleName(), "getFoodType", EFoodType.NOTFOOD);
         return EFoodType.NOTFOOD;
     }
 

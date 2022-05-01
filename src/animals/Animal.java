@@ -15,7 +15,6 @@ import graphics.ZooFrame;
 import graphics.ZooPanel;
 import mobility.*;
 import mobility.Point;
-import utilities.MessageUtility;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -85,7 +84,6 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      */
     public Animal(String name,Point location,String col,int size){
         super(location); // base class ctor
-        MessageUtility.logConstractor("Animal",name);
         this.setName(name);
         this.setSize(size);
         color = (col == null) ? "Natural": col;
@@ -101,11 +99,9 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
     public boolean setSize(int size){
         if (size <= max_size && size >= min_size) {
             this.size = size;
-            MessageUtility.logSetter(this.getAnimalName(), "setWeight", weight, true);
             return true;
         }
         this.size = default_size;
-        MessageUtility.logSetter(this.getAnimalName(), "setWeight", weight,false);
         return false;
     }
     /**
@@ -115,12 +111,10 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      */
     protected boolean setWeight (double weight){
         if(weight > 0){
-            MessageUtility.logSetter(this.getAnimalName(), "setWeight", weight,true);
             this.weight = weight;
             return true;
         }
         System.out.println("I got here ");
-        MessageUtility.logSetter(this.getAnimalName(), "setWeight", weight,false);
         return false;
     }
 
@@ -131,7 +125,6 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      */
     public boolean setColor(String col){
         color = col;
-        MessageUtility.logSetter(this.getAnimalName(), "setColor", col,true);
         return true;
     }
 
@@ -140,7 +133,6 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      * @return double type - weight.
      */
     public double getWeight(){
-        MessageUtility.logGetter(this.getAnimalName(), "getWeight", this.weight);
         return this.weight;}
 
 
@@ -155,10 +147,8 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
     private boolean setName(String name){
         if (name.compareTo("") != 0){ //if name recieved is not empty it changes.
             this.name = name;
-            MessageUtility.logSetter(name, "setName", name,true);
             return true;
         }
-        MessageUtility.logSetter(this.getAnimalName(), "setName", name,false);
         return false;
     }
 
@@ -170,7 +160,6 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      * @return String type - name.
      */
     public String getAnimalName(){
-        MessageUtility.logGetter(this.name, "getAnimalName", this.name);
         return this.name;
     }
 
@@ -224,7 +213,6 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      */
     @Override
     public EFoodType getFoodType(){
-        MessageUtility.logGetter(this.getAnimalName(), "getFoodType", EFoodType.MEAT);
         return EFoodType.MEAT;
     }
 
@@ -235,7 +223,6 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      * @return true.
      */
     public boolean setDiet(IDiet diet){
-        MessageUtility.logSetter(this.getAnimalName(), "setDiet", "["+diet.getClass().getSimpleName()+"]",true);
         this.diet = diet;
         return true;
     }
@@ -259,12 +246,10 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
         double weight_gained = diet.eat(this,food);
         if(weight_gained != 0){
             this.eatCount++;
-            MessageUtility.logBooleanFunction(this.getAnimalName(), "eat", food, true);
             this.setWeight(this.getWeight()+weight_gained);
             this.makeSound();
             return true;
         }
-        MessageUtility.logBooleanFunction(this.getAnimalName(), "eat", food, false);
         return false;
     }
 

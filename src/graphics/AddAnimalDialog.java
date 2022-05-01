@@ -122,31 +122,30 @@ public class AddAnimalDialog extends JDialog {
             location = new Point(x,y);
         }
         catch(NumberFormatException e){
-            System.out.println("Point set to default");
+            JOptionPane.showMessageDialog(field,"Animal location is invalid.\n Location set to default.","Error",JOptionPane.ERROR_MESSAGE);
             location = new Point(-1,-1);
         }
-
-            if(field.changing_f.getText().equals("Age"))//in case of a Turtle.
+        if(field.changing_f.isVisible()) {
+            if (field.changing_f.getText().equals("Age")) {//in case of a Turtle.
                 try {
                     changing_field = Integer.parseInt(field.changing_f.getText());
-                }
-                catch(NumberFormatException e){
-                    System.out.println(field.changing_f.getName() +" Set to default");
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(field,"Animal "+ field.changing_param.getText()+ " is invalid.\n"+field.changing_param.getText() + " Set to default.","Error",JOptionPane.ERROR_MESSAGE);
                     changing_field = -1; // setting age to out of range.
-        }
-            else//Giraffe or Elephant.
+                }
+            } else//Giraffe or Elephant.
                 try {
                     changing_field = Double.parseDouble(field.changing_f.getText());
-                }
-                catch(NumberFormatException e){
-                    System.out.println(field.changing_f.getName() + " Set to default ");
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(field,"Animal "+ field.changing_param.getText()+ " is invalid.\n"+field.changing_param.getText() + " Set to default.","Error",JOptionPane.ERROR_MESSAGE);
                     changing_field = -1; // setting changing field to out of range
                 }
+        }
         try {
             size = Integer.parseInt(field.size_f.getText());
         }
         catch(NumberFormatException e){
-            System.out.println(field.size.getName() +" Set to default");
+            JOptionPane.showMessageDialog(field,"Animal "+ field.size.getText()+ " is invalid.\n"+field.size.getText() + " Set to default.","Error",JOptionPane.ERROR_MESSAGE);
             size = -1; // setting age to out of range.
         }
 

@@ -10,9 +10,7 @@ package animals;
 import diet.Herbivore;
 import mobility.Point;
 import privateutil.Chewing_animals;
-import utilities.MessageUtility;
 
-import static utilities.MessageUtility.logSetter;
 
 
 public class Turtle extends Chewing_animals {
@@ -29,7 +27,6 @@ public class Turtle extends Chewing_animals {
      */
     public Turtle(String name, Point location,String col,int size, int Age){
         super(name,location,col,size);
-        MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
         this.setWeight(getSize()* weightFactor);
         if(!this.setAge(Age))
             setAge(defaultAge);
@@ -65,10 +62,8 @@ public class Turtle extends Chewing_animals {
     private boolean setAge(int Age) {
         if(Age > 0 && Age <= maxAge){
             this.Age = Age;
-            logSetter(this.getAnimalName(),"SetAge", Age,true);
             return true;
         }
-        logSetter(this.getAnimalName(),"SetAge", Age,false);
         return false;
     }
 
@@ -77,7 +72,6 @@ public class Turtle extends Chewing_animals {
      * @return animal age
      */
     public int getAge() {
-        MessageUtility.logGetter(this.getAnimalName(),"getAge",Age);
         return Age;
     }
 
@@ -92,7 +86,7 @@ public class Turtle extends Chewing_animals {
      */
     @Override
     public void chew() {
-        MessageUtility.logSound(this.getAnimalName(),"Retracts its head in then eats quietly");
+        //TODO mat need to be deleted
     }
 
     /**
