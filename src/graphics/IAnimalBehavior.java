@@ -3,7 +3,8 @@ package graphics;
 /** IAnimalBehavior -
  * @version : 1
  * @author : Oran Bourak, Tomer Burman
- *
+ *All animal's behavior methods
+ *All animals are impliments this interface
  */
 public interface IAnimalBehavior {
     public String getAnimalName();

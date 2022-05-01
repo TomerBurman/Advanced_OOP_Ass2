@@ -1,3 +1,8 @@
+/**
+ * MoveAnimalDialog class - Used to move the animals around a zoo
+ * Version:1
+ * author: Oran Bourak, Tomer Burman
+ */
 package graphics;
 
 import animals.Animal;
@@ -8,11 +13,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.HashMap;
 
+
+/**
+ * MovingAnimalDialog class
+ * Using BorderLayout :
+ * North - Contain AnimalSelection Panel: hase a comboBox list with all animals in the zoo
+ * Center- Contain MovingFields Panel: show animal current location and texts field to insert new point.
+ * param animalsList - all zoo animals
+ */
 public class MoveAnimalDialog extends JDialog {
     private JComboBox<Animal> animalsList;
-    HashMap<String,Animal> item;
+
     public MoveAnimalDialog(){
         this.setLayout(new BorderLayout());
         this.add(new AnimalSelection(),BorderLayout.NORTH);
@@ -23,6 +35,11 @@ public class MoveAnimalDialog extends JDialog {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    /**
+     * Private Class AnimalSelection
+     * Extends Jpanel
+     *Contains combobox with all zoo animals
+     */
     private class AnimalSelection extends JPanel{
         AnimalSelection(){
             this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
@@ -31,26 +48,23 @@ public class MoveAnimalDialog extends JDialog {
             this.add(animalsList);
             this.setVisible(true);
         }
-        /**
-         * Builds animals JComboBox that contains JLabels with icons of animals
-         */
-//        private void buildAnimalList() {
-//            for (Animal animal : ZooPanel.getAnimalList()) {
-//                JLabel animal_label = new JLabel(animal.getAnimalName());
-//                animal_label.setIcon(new ImageIcon(System.getProperty("user.dir") + "\\src\\photos\\" + animal.getClass().getSimpleName() + "png"));
-//                animalsList.addItem(animal_label);
-//            }
-//        }
+
         private void buildAnimalList() {
-//            item = new HashMap<>();
             animalsList = new JComboBox<>();
-//            JLabel label;
             for(Animal animal : ZooPanel.getAnimalList()) {
                 animalsList.addItem(animal);
             }
         }
 
     }
+
+    /**
+     * Private Class MovingFields
+     * Extends Jpanel
+     * Contains : 1) animal current location
+     *           2) new location TextFields
+     *           3) Move button
+     */
     private class MovingFields extends JPanel{
         private final JLabel currentLocation;
         private final JLabel point;
@@ -150,9 +164,6 @@ public class MoveAnimalDialog extends JDialog {
             gbc.gridy = 3;
             gbc.gridx = 1;
             this.add(move,gbc);
-
-
-
         }
     }
 

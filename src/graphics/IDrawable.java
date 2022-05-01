@@ -5,7 +5,7 @@ import java.awt.*;
 /**IDrawable -
  * @version : 1
  * @author : Oran Bourak, Tomer Burman.
- *
+ * All drwable objects methods are impliments this interface
  */
 public interface IDrawable {
 

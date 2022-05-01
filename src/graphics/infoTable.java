@@ -1,14 +1,16 @@
 package graphics;
-
 import animals.Animal;
 
-import javax.swing.*;
-import java.util.ArrayList;
-
+/**
+ * infoTable class - Extracting all animals' information for InfoTAble
+ */
 public class infoTable{
     private static Object[] colsParams = {"Animal","Name","Color","Weight","Hor. speed","Ver. speed","Eat counter"};
     private Object[][] animalsInfo;
 
+    /**
+     * Constructor- initiate 2 dim list with all zoo animals info according to the parameters list
+     */
     public infoTable(){
         animalsInfo = new Object[ZooPanel.getAnimalList().size()+1][colsParams.length];
         int i = 0;
@@ -28,9 +30,19 @@ public class infoTable{
         animalsInfo[i][6] = total;
 
     }
+
+    /**
+     * GetCols method
+     * @return list of parameters for JTable
+     */
     public Object[] getCols(){
         return colsParams;
     }
+
+    /**
+     * GetAnimalsInfo method
+     * @return 2 dim Object list,each animal have the details according to the list of parameters
+     */
     public Object[][] getAnimalsInfo(){
         return animalsInfo;
     }
