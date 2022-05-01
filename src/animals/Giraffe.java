@@ -34,7 +34,7 @@ public class Giraffe extends Chewing_animals {
         if (!this.setNeckLength(length))
             this.setNeckLength(defaultLength);
         this.setDiet(new Herbivore());
-        this.loadImages("giraffe");
+        this.loadImages("grf_" + color_choice.get(color) + "_");
 
     }
 

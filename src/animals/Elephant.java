@@ -31,7 +31,7 @@ public class Elephant extends Chewing_animals {
         if (!setTrunkLength(trunkLength))
             setTrunkLength(trunkDefaultLength);
         this.setDiet(new Herbivore());
-        this.loadImages("elephant");
+        this.loadImages("elf_" + color_choice.get(col) + "_");
 
     }
 

@@ -34,7 +34,7 @@ public class Turtle extends Chewing_animals {
         if(!this.setAge(Age))
             setAge(defaultAge);
         this.setDiet(new Herbivore());
-        this.loadImages("turtle");
+        this.loadImages("trt_" + color_choice.get(col) + "_");
 
 
     }

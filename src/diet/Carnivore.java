@@ -19,7 +19,7 @@ public class Carnivore implements IDiet{
      */
     @Override
     public boolean canEat(EFoodType food) {
-        return food == EFoodType.MEAT; // if the food is meat returns true, else false.
+        return (food == EFoodType.MEAT); // if the food is meat returns true, else false.
     }
 
     /**

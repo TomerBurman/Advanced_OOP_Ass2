@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 
 public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnimalBehavior {
@@ -55,15 +56,20 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
     private final static int min_size = 50;
     private final static int max_size = 300;
     private String color;
-    private int horSpeed; // ranges are 1-10
-    private int verSpeed; // ranges are 1-10
+    private int horSpeed = 1 ; // ranges are 1-10
+    private int verSpeed = 1 ; // ranges are 1-10
     private boolean coordChanged;
-    private Thread thread;
     private int x_dir = 1 ;
     private int y_dir = 1 ;
     private int eatCount;
     private ZooPanel pan;
     private BufferedImage img1,img2;
+    protected static HashMap<String,String> color_choice = new HashMap<>(){{
+        put("Natural","n");
+        put("Red","r");
+        put("Blue","b");
+    }
+    };
     protected final static String default_color = "Natural";
 
 
@@ -82,7 +88,7 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
         MessageUtility.logConstractor("Animal",name);
         this.setName(name);
         this.setSize(size);
-        this.setColor(col);
+        color = (col == null) ? "Natural": col;
         pan = ZooFrame.getPanel();
     }
 
@@ -252,6 +258,7 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
     public boolean eat(IEdible food){
         double weight_gained = diet.eat(this,food);
         if(weight_gained != 0){
+            this.eatCount++;
             MessageUtility.logBooleanFunction(this.getAnimalName(), "eat", food, true);
             this.setWeight(this.getWeight()+weight_gained);
             this.makeSound();
@@ -299,8 +306,8 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      */
     public void loadImages(String nm) {
         try {
-            img1 = ImageIO.read(new File(PICTURE_PATH + "\\src\\photos\\Right_" + nm + ".png"));
-            img2 = ImageIO.read(new File(PICTURE_PATH + "\\src\\photos\\Left_" + nm + ".png"));
+            img1 = ImageIO.read(new File(PICTURE_PATH + "\\src\\photos\\" + nm + "1.png"));
+            img2 = ImageIO.read(new File(PICTURE_PATH + "\\src\\photos\\" + nm + "2.png"));
         } catch (IOException e) {
             System.out.println("Cannot load image");
         }
@@ -311,6 +318,16 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
         else
             g.drawImage(img2,Math.abs(this.getLocation().getX()),Math.abs(this.getLocation().getY()-size/10),size/2,size,pan);
 
+    }
+
+    public Integer getHorSpeed() {
+        return this.horSpeed;
+    }
+    public Integer getVerSpeed() {
+        return this.verSpeed;
+    }
+    public int getEAT_DISTANCE(){
+        return this.EAT_DISTANCE;
     }
 }
 

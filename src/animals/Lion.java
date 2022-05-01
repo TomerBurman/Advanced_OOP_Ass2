@@ -27,7 +27,7 @@ public class Lion extends Roaring_animals {
         MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
         super.setWeight(getSize() * weightFactor);
         this.setDiet(new Carnivore()); // meat eater
-        this.loadImages("lion");
+        this.loadImages("lio_" + color_choice.get(col) + "_");
 
     }
 

@@ -1,6 +1,7 @@
 package graphics;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -57,6 +58,10 @@ public class AddAnimalDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buildFields();
+                if(name.equals("")) {
+                    JOptionPane.showMessageDialog(create_animal, "Animal must have a name ! ", "Error message", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 Animal animalToAdd=null;
                 switch (select.animal_choice.getSelectedItem().toString()) {
                     case "Lion" -> animalToAdd = new Lion(name, location, col, size);
@@ -103,6 +108,8 @@ public class AddAnimalDialog extends JDialog {
      */
     private void buildFields(){
             name = field.name_f.getText();
+            if(name.equals(""))
+                return;
         try {
             int x = Integer.parseInt(field.location_fx.getText());
             int y = Integer.parseInt(field.location_fy.getText());
@@ -136,6 +143,8 @@ public class AddAnimalDialog extends JDialog {
             System.out.println(field.size.getName() +" Set to default");
             size = -1; // setting age to out of range.
         }
+
+        col = (String)field.color.getSelectedItem();
     }
 
     private static class Animal_fields extends JPanel {
@@ -151,8 +160,8 @@ public class AddAnimalDialog extends JDialog {
         private final  JTextField vertical_f = new JTextField();
         private final  JLabel horizontal_speed = new JLabel("Horizontal speed : ");
         private final  JTextField horizontal_f = new JTextField();
-        private final  JLabel color = new JLabel("Color");
-        private final  JTextField color_f = new JTextField();
+        private final String[] colors = {"Natural","Blue","Red"};
+        private final  JComboBox<String> color = new JComboBox<>(colors);
         private final  JLabel changing_param = new JLabel(); // field that varies from animal to animal
         private final  JTextField changing_f = new JTextField();
         private final  String[] fields = {"", "", "Neck length", "Age", "Trunk length"};
@@ -165,8 +174,6 @@ public class AddAnimalDialog extends JDialog {
             this.add(location_fx);
             this.add(location_y);
             this.add(location_fy);
-            this.add(color);
-            this.add(color_f);
             this.add(size);
             this.add(size_f);
             this.add(vertical_speed);
@@ -175,6 +182,8 @@ public class AddAnimalDialog extends JDialog {
             this.add(horizontal_f);
             this.add(changing_param);
             this.add(changing_f);
+            this.add(color);
+            color.setBackground(Color.WHITE);
             vertical_f.setEnabled(false);
             horizontal_f.setEnabled(false);
 
@@ -208,6 +217,9 @@ public class AddAnimalDialog extends JDialog {
         }
         @Override
         public void actionPerformed(ActionEvent e) {
+            clearFields();
+            field.vertical_f.setText("1");
+            field.horizontal_f.setText("1");
             int index = animal_choice.getSelectedIndex();
             try {
                 img = ImageIO.read((new File(System.getProperty("user.dir") +"\\src\\photos\\" + animal_choice.getSelectedItem() + ".png")));
@@ -221,6 +233,17 @@ public class AddAnimalDialog extends JDialog {
 
         }
 
+        private  void  clearFields(){
+            field.name_f.setText("");
+            field.location_fx.setText("");
+            field.location_fy.setText("");
+            field.color.setSelectedIndex(0);
+            field.size_f.setText("");
+        }
+
+
+
 
     }
+
 }

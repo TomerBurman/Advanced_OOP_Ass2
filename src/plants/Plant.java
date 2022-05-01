@@ -1,13 +1,21 @@
 package plants;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 import food.EFoodType;
 import food.IEdible;
 import graphics.IDrawable;
+import graphics.ZooPanel;
 import mobility.ILocatable;
 import mobility.Point;
 import utilities.MessageUtility;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 /**
  * @author baroh
@@ -27,6 +35,7 @@ public abstract class Plant implements IEdible, ILocatable, IDrawable {
 	 */
 	private double weight;
 
+	private BufferedImage img;
 	/**
 	 * 
 	 */
@@ -133,6 +142,28 @@ public abstract class Plant implements IEdible, ILocatable, IDrawable {
 	@Override
 	public String toString() {
 		return "[" + this.getClass().getSimpleName() + "] ";
+	}
+
+
+@Override
+	public void loadImages(String nm){
+		try{
+			img = ImageIO.read(new File(PICTURE_PATH + "\\src\\photos\\" + nm + ".png"));
+		}
+		catch(IOException e){
+			JOptionPane.showMessageDialog(ZooPanel.getDraw_panel(),"Image could not be loaded.","Error",JOptionPane.ERROR_MESSAGE);
+		}
+	}
+@Override
+	public void drawObject(Graphics g){
+		JPanel panel = ZooPanel.getDraw_panel();
+		g.drawImage(img,panel.getWidth()/2-5,panel.getHeight()/2-5,25,25,panel);
+		System.out.println((panel.getWidth()/2) +" "+ (panel.getHeight()/2-5));
+	}
+	@Override
+
+	public String getColor(){
+		return "Green";
 	}
 
 

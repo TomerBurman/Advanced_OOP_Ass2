@@ -6,9 +6,10 @@ import utilities.MessageUtility;
  * @author baroh
  *
  */
-public abstract  class Cabbage extends Plant {
+public  class Cabbage extends Plant {
 	public Cabbage() {
-		MessageUtility.logConstractor("Cabbage", "Cabbage");
+		this.loadImages("cabbage");
 	}
+
 
 }

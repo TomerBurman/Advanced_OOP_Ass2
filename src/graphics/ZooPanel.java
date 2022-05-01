@@ -1,6 +1,9 @@
 package graphics;
 
 import animals.Animal;
+import food.EFoodType;
+import food.IEdible;
+import mobility.Point;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +19,16 @@ public class ZooPanel extends JPanel implements Runnable {
     private static ArrayList<Animal> animal_list = new ArrayList<>();
     private static drawPanel draw_panel;
     private ButtonPanel button_panel;
+    private static ImageIcon backGround = null;
+    private static IEdible food=null;
+
+
+    public static void setFoodType(IEdible f){ food = f; }
+
+
+
+    public ButtonPanel getButtonPanel(){return button_panel;}
+
 
 
     public ZooPanel(){
@@ -26,11 +39,47 @@ public class ZooPanel extends JPanel implements Runnable {
         this.add(draw_panel,BorderLayout.CENTER); // painting panel
 
     }
+
+
     public static void manageZoo(){
-       if(isChanged()) {
+        if(animal_list.size() != num_of_Animals ){ // in cases: 1) Clear animal button is pressed , 2)one of the animals has been eaten
+            num_of_Animals = animal_list.size();
+            draw_panel.repaint();
+        }
+       if(isChanged()) { // in case of movement
            draw_panel.repaint();
        }
+
+       int i =0;
+       Animal animal1 ,animal2;
+        while (i < num_of_Animals){
+          animal1 = animal_list.get(i);
+          if(food != null && animal1.calcDistance(new Point(draw_panel.getWidth()/2,draw_panel.getHeight()/2)) <= animal1.getEAT_DISTANCE()){
+              if(animal1.eat(food))
+                  food = null;
+          }
+           for(int j =0; j < num_of_Animals;j++){
+               animal2 = animal_list.get(j);
+               if(animal1.getWeight() > animal2.getWeight()*2 && animal1.calcDistance(animal2.getLocation()) <= animal1.getEAT_DISTANCE())
+                   if(animal1.eat(animal2)) {
+                       animal_list.remove(j);
+                       draw_panel.repaint();
+                       i = 0;
+                       System.out.println(animal1.getAnimalName() +" eat "+ animal2.getAnimalName());
+                       break;
+                   }
+           }
+           if(animal_list.size() != num_of_Animals)
+               num_of_Animals--;
+           else
+               i++;
+      }
+        if(food != null)
+            draw_panel.repaint();
     }
+
+
+
 
     public static boolean isChanged(){
         for(Animal animal : animal_list)
@@ -47,7 +96,13 @@ public class ZooPanel extends JPanel implements Runnable {
     }
 
     public static void setBack(Color c){
+        backGround = null;
         draw_panel.setBackground(c);
+    }
+
+    public static void setBack(String file){
+        backGround = new ImageIcon(file);
+        draw_panel.repaint();
     }
    public static ArrayList<Animal> getAnimalList(){return animal_list;}
 
@@ -98,6 +153,38 @@ public class ZooPanel extends JPanel implements Runnable {
 
                 }
             });
+            this.info.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(animal_list.size() != 0) {
+                        infoTable info = new infoTable();
+                        JTable infoTable = new JTable(info.getAnimalsInfo(), info.getCols());
+                        JOptionPane.showMessageDialog(button_panel, new JScrollPane(infoTable));
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(button_panel,"No animals to show.","Error",JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+            this.clear.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(animal_list.size() > 0) {
+                        animal_list.clear();
+                        manageZoo();
+                    }
+                    else
+                        JOptionPane.showMessageDialog(button_panel,"Animals do not exist.","Error",JOptionPane.ERROR_MESSAGE);
+
+                }
+            });
+            this.food.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    FoodDialog food = new FoodDialog();
+                    manageZoo();
+                }
+            });
             this.exit.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -123,8 +210,14 @@ public class ZooPanel extends JPanel implements Runnable {
         @Override
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
+            if(backGround != null)
+                g.drawImage(backGround.getImage(),0,0,draw_panel.getWidth(),draw_panel.getHeight(),null);
+            if(food != null)
+                ((IDrawable)food).drawObject(g);
+
             for(Animal animal : animal_list)
                 animal.drawObject(g);
+
         }
 
     }
@@ -140,8 +233,7 @@ public class ZooPanel extends JPanel implements Runnable {
     public static void addAnimal(Animal animal){
         if(num_of_Animals < max_animals) {
             animal_list.add(animal);
-            draw_panel.repaint();
-            num_of_Animals++;
+            manageZoo();
         }
         else{
             JOptionPane.showMessageDialog(dialog,"You can not make more then 10 animals at once. ","Error message",JOptionPane.WARNING_MESSAGE

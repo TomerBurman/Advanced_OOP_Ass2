@@ -13,5 +13,7 @@ public interface IEdible {
      */
     EFoodType getFoodType();
 
+
+
 }
 

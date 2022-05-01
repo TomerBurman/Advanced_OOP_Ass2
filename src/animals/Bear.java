@@ -25,7 +25,7 @@ public class Bear extends Roaring_animals {
         MessageUtility.logConstractor(this.getClass().getSimpleName(),this.getAnimalName());
         this.setWeight(getSize() * weightFactor);
         this.setDiet(new Omnivore()); // meat eater
-        this.loadImages("bear");
+        this.loadImages("bea_" + color_choice.get(col) + "_");
     }
 
     /**

@@ -28,6 +28,25 @@ public class ZooFrame extends JFrame {
             JMenuItem none = new JMenuItem("None");
             none.addActionListener(e -> ZooPanel.setBack(Color.WHITE));
             green.addActionListener(e -> ZooPanel.setBack(Color.GREEN));
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    FileDialog fd = new FileDialog(new JFrame(),"Choose an img",FileDialog.LOAD);
+                    fd.setDirectory("C:\\");
+                    fd.setFile("*.png");
+                    fd.setVisible(true);
+                    String filename = fd.getFile();
+                    String filepath = fd.getDirectory();
+                    if(filename == null) {
+                        JOptionPane.showMessageDialog(panel, "No changes were applied.", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else{
+
+                        ZooPanel.setBack(filepath + filename); // full path including photo name.
+                    }
+
+                }
+            });
             backGround.add(image);
             backGround.add(green);
             backGround.add(none);
