@@ -110,7 +110,10 @@ public class ZooFrame extends JFrame {
         panel = new ZooPanel();
         this.add(panel, BorderLayout.CENTER);
         this.setVisible(true);
+        //this.setSize(new Dimension(800 ,600));
         this.pack();
+        this.setResizable(false);
+
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 

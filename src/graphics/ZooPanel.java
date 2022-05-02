@@ -178,11 +178,12 @@ public class ZooPanel extends JPanel implements Runnable {
          * buttons are seperated between themselves.
          */
         ButtonPanel(){
+            this.setPreferredSize(new Dimension(800,30));
             this.setBackground(new Color(0,0,255));
             animalButton();
             GridLayout lay = new GridLayout(1,0);
             this.setLayout(lay);
-            lay.setHgap(100);
+            lay.setHgap(10);
             this.add(add_Animal);
             this.add(move_Animal);
             this.add(clear);

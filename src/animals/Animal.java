@@ -304,10 +304,13 @@ public abstract class Animal extends Mobile implements IEdible, IDrawable, IAnim
      */
     public void drawObject(Graphics g){
         Graphics2D gr = (Graphics2D)g;
+        int x_location = (this.getLocation().getX()+size >800)?(800-size):Math.abs(this.getLocation().getX() - size / 2);
+        int y_location = (this.getLocation().getY()+size >600)?(600-size):Math.abs(this.getLocation().getY() - size / 10);
         if(x_dir == 1 )
-            gr.drawImage(img1, Math.abs(this.getLocation().getX() - size / 2), Math.abs(this.getLocation().getY() - size / 10), size / 2, size, pan);
+            gr.drawImage(img1, x_location, y_location, size / 2, size, pan);
         else
-            gr.drawImage(img2,Math.abs(this.getLocation().getX()),Math.abs(this.getLocation().getY()-size/10),size/2,size,pan);
+            gr.drawImage(img2, x_location, y_location, size / 2, size, pan);
+
 
     }
 

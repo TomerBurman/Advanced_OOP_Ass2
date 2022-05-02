@@ -150,7 +150,6 @@ public abstract class Plant implements IEdible, ILocatable, IDrawable {
 		JPanel panel = ZooPanel.getDraw_panel();
 		Graphics2D gr = (Graphics2D)g;
 		gr.drawImage(img,panel.getWidth()/2-5,panel.getHeight()/2-5,25,25,panel);
-		System.out.println((panel.getWidth()/2) +" "+ (panel.getHeight()/2-5));
 	}
 	@Override
 
