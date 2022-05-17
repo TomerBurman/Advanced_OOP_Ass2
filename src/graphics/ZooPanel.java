@@ -34,9 +34,10 @@ public class ZooPanel extends JPanel implements Runnable {
     private static JDialog dialog;
     private static ArrayList<Animal> animal_list = new ArrayList<>();
     private static drawPanel draw_panel;
-    private ButtonPanel button_panel;
+    private static ButtonPanel button_panel;
     private static ImageIcon backGround = null;
     private static IEdible food=null;
+    private Thread controller;
 
     /**
      * setFoodType - sets the food to received food.
@@ -55,6 +56,7 @@ public class ZooPanel extends JPanel implements Runnable {
         button_panel = new ButtonPanel();
         this.add(button_panel,BorderLayout.SOUTH); // buttonpanel
         this.add(draw_panel,BorderLayout.CENTER); // painting panel
+        this.controller = new Thread(this);
 
     }
 
@@ -62,8 +64,8 @@ public class ZooPanel extends JPanel implements Runnable {
      * manageZoo - keeps track on if there are  any changes in our zoo
      * if there are, handles the changes and calls draw_panel repaint.
      */
-    public static void manageZoo(){
-
+    public void manageZoo(){
+       // notify(); //TODO  check if the thread is waiting before
         if(animal_list.size() != num_of_Animals ){ // in cases: 1) Clear animal button is pressed , 2)one of the animals has been eaten
             num_of_Animals = animal_list.size();
             draw_panel.repaint();
@@ -76,7 +78,7 @@ public class ZooPanel extends JPanel implements Runnable {
        Animal animal1 ,animal2;
         while (i < num_of_Animals){// checks all animals with all animals, if one can eat the other.
           animal1 = animal_list.get(i);
-          if(food != null && animal1.calcDistance(new Point(draw_panel.getWidth()/2,draw_panel.getHeight()/2)) <= animal1.getEAT_DISTANCE()){
+          if(food != null && animal1.calcDistance(new Point(draw_panel.getWidth()/2,(draw_panel.getHeight()+button_panel.getHeight())/2)) <= animal1.getEAT_DISTANCE()){
               //in case of close food.
               if(animal1.eat(food))
                   //in case the animal is able to eat the food.
@@ -84,8 +86,9 @@ public class ZooPanel extends JPanel implements Runnable {
           }
            for(int j =0; j < num_of_Animals;j++){
                animal2 = animal_list.get(j);
-               if(animal1.getWeight() > animal2.getWeight()*2 && animal1.calcDistance(animal2.getLocation()) <= animal1.getEAT_DISTANCE())
+               if(animal1.getWeight() > animal2.getWeight()*2 && animal1.calcDistance(animal2.getLocation()) <= animal2.getSize())
                    if(animal1.eat(animal2)) {
+                       animal2.setThreadExit(true);
                        animal_list.remove(j);
                        draw_panel.repaint();
                        i = 0;
@@ -109,12 +112,16 @@ public class ZooPanel extends JPanel implements Runnable {
      * @return boolean
      */
     public static boolean isChanged(){
+        boolean flag = false;
         for(Animal animal : animal_list)
-            if(animal.getChanges()) {
+            if (animal.getChanges()) {
+                synchronized (animal) {
                 animal.setChanges(false);
-                return true;
+                flag = true;
+                animal.notify();
+                }
             }
-        return false;
+        return flag;
     }
 
     /**
@@ -149,6 +156,14 @@ public class ZooPanel extends JPanel implements Runnable {
      * @return ArrayList<Animal>
      */
    public static ArrayList<Animal> getAnimalList(){return animal_list;}
+
+    /**
+     * Get Controller thread
+     * @return controller thread
+     */
+    public Thread getController() {
+        return controller;
+    }
 
     /**
      * ButtonPanel - extends JPanel, represents a Button panel that has
@@ -204,7 +219,7 @@ public class ZooPanel extends JPanel implements Runnable {
          *
          * @return boolean
          */
-        boolean animalButton(){
+        public boolean animalButton(){
             this.add_Animal.addActionListener(new ActionListener() {
 
                 @Override
@@ -333,7 +348,24 @@ public class ZooPanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        //TODO
+        while (true) {
+//            if (num_of_Animals == 0) {
+//                synchronized (animal_list) {
+//                    try {
+//                        wait();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//            else
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            manageZoo();
+        }
     }
 
 
@@ -345,7 +377,8 @@ public class ZooPanel extends JPanel implements Runnable {
     public static void addAnimal(Animal animal){
         if(num_of_Animals < max_animals) {
             animal_list.add(animal);
-            manageZoo();
+            animal.getThread().start();
+            //manageZoo();
         }
         else{
             JOptionPane.showMessageDialog(dialog,"You can not make more then 10 animals at once. ","Error message",JOptionPane.WARNING_MESSAGE

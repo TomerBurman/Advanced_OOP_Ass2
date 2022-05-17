@@ -98,7 +98,7 @@ public class MoveAnimalDialog extends JDialog {
                         }
                         newLocation.setText("New location  ");
                         point.setText(Objects.requireNonNull(animal).getLocation().toString());
-                        ZooPanel.manageZoo();
+                       // ZooPanel.manageZoo();
                     }
                     catch(NumberFormatException exc){
                         JOptionPane.showMessageDialog(new JPanel(),"Point can not be converted.","Error message",JOptionPane.ERROR_MESSAGE);
